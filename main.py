@@ -89,13 +89,19 @@ def index():
     cards = Card.query.filter_by(user_email=email).all()
     return render_template('index.html', cards=cards)
 
+
+@app.route('/logout')
+def logout():
+    session.pop('user_email', None)
+    return redirect('/')
+
+
 # Lanzando la página de la tarjeta
 @app.route('/card/<int:id>')
 def card(id):
     card = Card.query.get(id)
 
     return render_template('card.html', card=card)
-
 # Iniciando la página de creación de tarjetas
 @app.route('/create')
 def create():
